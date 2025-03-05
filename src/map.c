@@ -1,0 +1,146 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   map.c                                              :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: mborsuk <marvin@42.fr>                       +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/03/05 10:00:23 by mborsuk       #+#    #+#                 */
+/*   Updated: 2025/03/05 10:07:46 by mborsuk       ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "free_functions.h"
+#include "maps_utils.h"
+#include "map.h"
+#include "utils_2.h"
+#include "./validation/validation.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+void	modify_map(t_map *map, char **ar, int i, int j)
+{
+	map->cells[i][j]->value = ar[i][j];
+	map->cells[i][j]->state = ar[i][j];
+	map->cells[i][j]->x = j;
+	map->cells[i][j]->y = i;
+	if (map->cells[i][j]->state == CELL_PLAYER)
+	{
+		map->pl_p.x = j;
+		map->pl_p.y = i;
+	}
+	if (map->cells[i][j]->state == CELL_COLLECTIBLE)
+	{
+		map->collectibles++;
+	}
+	if (map->cells[i][j]->state == CELL_EXIT_LOCKED)
+	{
+		map->exit_pos.x = j;
+		map->exit_pos.y = i;
+	}
+	if (map->cells[i][j]->state == CELL_DANGER)
+	{
+		map->danger.x = j;
+		map->danger.y = i;
+	}
+}
+
+char	**read_file(char *file_name)
+{
+	int			file;
+	char		buffer[BUFFER_SIZE + 1];
+	int			bytes;
+	static char	*str;
+	char		**ar;
+
+	str = NULL;
+	file = open(file_name, O_RDONLY);
+	if (file == -1)
+	{
+		write(1, "Error\nError opening file\n", 25);
+		exit(1);
+	}
+	bytes = read(file, buffer, BUFFER_SIZE);
+	while (bytes > 0)
+	{
+		buffer[bytes] = '\0';
+		ft_strjoin(&str, buffer);
+		bytes = read(file, buffer, BUFFER_SIZE);
+	}
+	ar = ft_split(str, '\n');
+	free(str);
+	close(file);
+	return (ar);
+}
+
+void	init_map(t_map *map, char **file_lines)
+{
+	int	i;
+	int	size;
+
+	map->collectibles = 0;
+	map->x = 0;
+	map->y = 0;
+	map->moves = 0;
+	map->is_victory = 0;
+	map->lost = 0;
+	i = 0;
+	size = get_ar_len(file_lines);
+	map->y = size;
+	map->x = get_len(file_lines[i]);
+}
+
+void	fill_map_cells(t_map *map, char **file_lines)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (file_lines[i])
+	{
+		map->cells[i] = malloc(sizeof(t_cell *) * (get_len(file_lines[i]) + 1));
+		if (!map->cells[i])
+		{
+			free(map->cells);
+			return ;
+		}
+		j = 0;
+		while (file_lines[i][j])
+		{
+			map->cells[i][j] = (t_cell *)malloc(sizeof(t_cell));
+			if (!map->cells[i][j])
+				return ((void)free(map->cells[i]));
+			modify_map(map, file_lines, i, j);
+			j++;
+		}
+		i++;
+	}
+}
+
+t_map	*parse_map(char *file_name)
+{
+	char	**ar;
+	int		size;
+	t_map	*map;
+
+	ar = read_file(file_name);
+	if (!map_val(ar, file_name))
+	{
+		free_substrings(ar);
+		exit(1);
+	}
+	map = (t_map *) malloc(sizeof(t_map));
+	if (!map)
+		return (NULL);
+	init_map(map, ar);
+	size = get_ar_len(ar);
+	map->cells = malloc(sizeof(t_cell **) * (size + 1));
+	if (!map->cells)
+		return (NULL);
+	fill_map_cells(map, ar);
+	free_substrings(ar);
+	return (map);
+}

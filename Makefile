@@ -1,5 +1,6 @@
 SFILES			= \
 				./src/display_map.c \
+				./src/file_utils.c \
 				./src/free_functions.c \
 				./src/map.c \
 				./src/maps_utils.c \

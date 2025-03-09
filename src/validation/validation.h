@@ -6,7 +6,7 @@
 /*   By: mborsuk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:42:21 by mborsuk           #+#    #+#             */
-/*   Updated: 2025/03/08 22:38:38 by mborsuk          ###   ########.fr       */
+/*   Updated: 2025/03/09 18:36:18 by mborsuk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,5 @@ int		check_all_positions(char **array, t_c *player_position,
 
 void	init_coords(t_c *coords);
 
-int	check_file_extension(char *filename);
+int		check_file_extension(char *filename);
 #endif

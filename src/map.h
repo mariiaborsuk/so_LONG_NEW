@@ -6,7 +6,7 @@
 /*   By: mborsuk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:00:37 by mborsuk           #+#    #+#             */
-/*   Updated: 2025/03/08 23:39:54 by mborsuk          ###   ########.fr       */
+/*   Updated: 2025/03/09 18:48:52 by mborsuk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,5 @@ int					get_ar_len(char **ar);
 t_map				*parse_map(char *file_name);
 void				expose(t_expose_data *expose_data);
 
+char				*read_file_contents(char *file_name);
 #endif

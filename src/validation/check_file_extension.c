@@ -6,7 +6,7 @@
 /*   By: mborsuk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:39:13 by mborsuk           #+#    #+#             */
-/*   Updated: 2025/03/09 10:35:11 by mborsuk          ###   ########.fr       */
+/*   Updated: 2025/03/09 18:37:02 by mborsuk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,8 @@ char	*ft_strrchr(const char *s, int c)
 
 int	check_file_extension(char *filename)
 {
-	// char *f_name;
 	int	i;
 
-	// if(ft_strrchr(filename, '/'))
-	// 	f_name=ft_strrchr(filename, '/');
-	// else
-	// 	f_name =filename;
 	i = 0;
 	while (filename[i])
 		i++;
@@ -51,9 +46,8 @@ int	check_file_extension(char *filename)
 			write(1, "Error\nWrong extension\n", 23);
 			return (0);
 		}
-
-		if (filename[i - 1] == 'r' && filename[i - 2] == 'e'
-			&& filename[i - 3] == 'b' && filename[i - 4] == '.')
+		if (filename[i - 1] == 'r' && filename[i - 2] == 'e' && filename[i
+				- 3] == 'b' && filename[i - 4] == '.')
 			return (1);
 	}
 	write(1, "Error\nWrong extension\n", 23);

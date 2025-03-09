@@ -5,12 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mborsuk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/01 10:46:16 by mborsuk       #+  #+#    #+#             */
-/*   Updated: 2025/03/01 12:07:30 by mborsuk          ###   ########.fr       */
+/*   Created: 2025/03/01 10:46:16 by mborsuk           #+#    #+#             */
+/*   Updated: 2025/03/09 18:31:57 by mborsuk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "display_map.h"
 #include "maps_utils.h"
+#include "map.h"
 #include "../minilibx/mlx.h"
 
 t_image_pointers	*get_image_pointers(void)
@@ -55,4 +57,13 @@ void	init_image_pointers(void *m_p)
 	im_p->image_locked_exit = mlx_xpm_file_to_image(m_p, "./img/l.xpm", &x, &y);
 	im_p->image_unlocked = mlx_xpm_file_to_image(m_p, "./img/un.xpm", &x, &y);
 	im_p->danger = mlx_xpm_file_to_image(m_p, "./img/d.xpm", &x, &y);
+}
+
+int	expose_callback(void *param)
+{
+	t_expose_data	*data;
+
+	data = (t_expose_data *)param;
+	draw_map(data);
+	return (0);
 }

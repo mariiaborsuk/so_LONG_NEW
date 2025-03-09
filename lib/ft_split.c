@@ -6,22 +6,31 @@
 /*   By: mborsuk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:37:41 by mborsuk           #+#    #+#             */
-/*   Updated: 2025/03/09 11:00:05 by mborsuk          ###   ########.fr       */
+/*   Updated: 2025/03/09 18:33:07 by mborsuk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_split.h"
+#include "../src/free_functions.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-static void	*free_fn(char **ptr, int i)
+int	count_lines(char const *str, char c)
 {
-	while (i >= 0)
+	int	i;
+	int	lines;
+
+	i = 0;
+	lines = 0;
+	while (str[i])
 	{
-		free(ptr[i]);
-		i--;
+		if (str[i] == c)
+		{
+			lines++;
+		}
+		i++;
 	}
-	free(ptr);
-	return (NULL);
+	return (lines);
 }
 
 static int	ft_count(char const *str, char c)
@@ -76,23 +85,32 @@ static char	**ft_split_words(char const *s, char c, char **strs, int count)
 			i++;
 		strs[word] = malloc(sizeof(char) * (i - start + 1));
 		if (!strs[word])
-			return (free_fn(strs, word - 1));
+		{
+			free_fn(strs);
+			return (NULL);
+		}
 		ft_putword(strs[word++], s, start, i - start);
 	}
 	strs[word] = NULL;
 	return (strs);
 }
 
-char	**ft_split(char const *s, char c)
+void	ft_split(char const *s, char c, t_split *split)
 {
 	char	**strs;
 	int		count;
+	int		lines;
 
 	if (!s)
-		return (NULL);
+		return ;
 	count = ft_count(s, c);
+	lines = count_lines(s, c);
 	strs = malloc(sizeof(char *) * (count + 1));
 	if (!strs)
-		return (NULL);
-	return (ft_split_words(s, c, strs, count));
+	{
+		free_fn(strs);
+		return ;
+	}
+	split->ar = ft_split_words(s, c, strs, count);
+	split->line_count = lines;
 }

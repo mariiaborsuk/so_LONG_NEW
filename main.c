@@ -6,7 +6,7 @@
 /*   By: mborsuk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:04:25 by mborsuk           #+#    #+#             */
-/*   Updated: 2025/03/08 23:14:52 by mborsuk          ###   ########.fr       */
+/*   Updated: 2025/03/09 18:42:32 by mborsuk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int	main(int argc, char *argv[])
 	if (argc == 2)
 	{
 		map = parse_map(argv[1]);
+		if (!map)
+			return (1);
 		expose_data = (t_expose_data *) malloc(sizeof(t_expose_data));
 		if (!expose_data)
 			return (1);

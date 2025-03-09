@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mborsuk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/01 10:44:30 by mborsuk       #+  #+#    #+#             */
-/*   Updated: 2025/03/01 12:06:48 by mborsuk          ###   ########.fr       */
+/*   Created: 2025/03/01 10:44:30 by mborsuk           #+#    #+#             */
+/*   Updated: 2025/03/09 18:32:45 by mborsuk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,6 @@ int	destroy_window(void *m_p)
 	return (1);
 }
 
-int	expose_callback(void *param)
-{
-	t_expose_data	*data;
-
-	data = (t_expose_data *)param;
-	draw_map(data);
-	return (0);
-}
-
 void	free_substrings(char **substrings)
 {
 	int	i;
@@ -85,4 +76,17 @@ void	free_substrings(char **substrings)
 		i++;
 	}
 	free(substrings);
+}
+
+void	free_fn(char **ptr)
+{
+	int	i;
+
+	i = 0;
+	while (ptr[i] != NULL)
+	{
+		free(ptr[i]);
+		i++;
+	}
+	free(ptr);
 }

@@ -6,19 +6,18 @@
 /*   By: mborsuk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:00:23 by mborsuk           #+#    #+#             */
-/*   Updated: 2025/03/09 11:04:20 by mborsuk          ###   ########.fr       */
+/*   Updated: 2025/03/09 18:57:27 by mborsuk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "free_functions.h"
-#include "maps_utils.h"
-#include "map.h"
-#include "utils_2.h"
 #include "./validation/validation.h"
+#include "free_functions.h"
+#include "map.h"
+#include "maps_utils.h"
+#include "utils_2.h"
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
 #include <unistd.h>
 
 void	modify_map(t_map *map, char **ar, int i, int j)
@@ -50,30 +49,24 @@ void	modify_map(t_map *map, char **ar, int i, int j)
 
 char	**read_file(char *file_name)
 {
-	int			file;
-	char		buffer[BUFFER_SIZE + 1];
-	int			bytes;
 	static char	*str;
-	char		**ar;
+	t_split		split;
 
-	str = NULL;
-	file = open(file_name, O_RDONLY);
-	if (file == -1)
+	split.ar = NULL;
+	split.line_count = 0;
+	str = read_file_contents(file_name);
+	ft_split(str, '\n', &split);
+	if (!get_ar_len(split.ar))
+		return (NULL);
+	if (split.line_count > get_ar_len(split.ar))
 	{
-		write(1, "Error\nError opening file\n", 25);
-		exit(1);
+		free(str);
+		free_fn(split.ar);
+		write(1, "Error\n Not rectangular.\n", 25);
+		return (NULL);
 	}
-	bytes = read(file, buffer, BUFFER_SIZE);
-	while (bytes > 0)
-	{
-		buffer[bytes] = '\0';
-		ft_strjoin(&str, buffer);
-		bytes = read(file, buffer, BUFFER_SIZE);
-	}
-	ar = ft_split(str, '\n');
 	free(str);
-	close(file);
-	return (ar);
+	return (split.ar);
 }
 
 void	init_map(t_map *map, char **file_lines)
@@ -91,6 +84,7 @@ void	init_map(t_map *map, char **file_lines)
 	size = get_ar_len(file_lines);
 	map->y = size;
 	map->x = get_len(file_lines[i]);
+	map->cells = malloc(sizeof(t_cell **) * (size + 1));
 }
 
 void	fill_map_cells(t_map *map, char **file_lines)
@@ -123,26 +117,26 @@ void	fill_map_cells(t_map *map, char **file_lines)
 t_map	*parse_map(char *file_name)
 {
 	char	**ar;
-	int		size;
 	t_map	*map;
 
 	if (!check_file_extension(file_name))
-		exit (1);
+		exit(1);
 	ar = read_file(file_name);
+	if (get_ar_len(ar) == 0)
+	{
+		write(1, "Error\n Empty file\n", 19);
+		return (NULL);
+	}
 	if (!map_val(ar))
 	{
 		if (ar != NULL)
 			free_substrings(ar);
-		exit(1);
+		return (NULL);
 	}
-	map = (t_map *) malloc(sizeof(t_map));
+	map = (t_map *)malloc(sizeof(t_map));
 	if (!map)
 		return (NULL);
 	init_map(map, ar);
-	size = get_ar_len(ar);
-	map->cells = malloc(sizeof(t_cell **) * (size + 1));
-	if (!map->cells)
-		return (NULL);
 	fill_map_cells(map, ar);
 	free_substrings(ar);
 	return (map);

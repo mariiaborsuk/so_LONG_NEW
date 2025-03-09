@@ -5,17 +5,23 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mborsuk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/01 10:42:04 by mborsuk       #+  #+#    #+#             */
-/*   Updated: 2025/03/01 12:09:37 by mborsuk          ###   ########.fr       */
+/*   Created: 2025/03/01 10:42:04 by mborsuk           #+#    #+#             */
+/*   Updated: 2025/03/09 11:03:31 by mborsuk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "validation.h"
+#include "stdio.h"
+#include <fcntl.h>
+#include <unistd.h>
 
-int	map_val(char **ar, char *filename)
+int	map_val(char **ar)
 {
-	if (!check_file_extension(filename))
+	if (!ar)
+	{
+		write(1, "Error\nEmpty file\n", 18);
 		return (0);
+	}
 	if (!check_rectangular(ar))
 		return (0);
 	if (!check_allowed_symbols(ar))

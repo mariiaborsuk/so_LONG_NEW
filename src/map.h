@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   map.h                                              :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mborsuk <marvin@42.fr>                       +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/05 10:00:37 by mborsuk       #+#    #+#                 */
-/*   Updated: 2025/03/05 11:27:28 by mborsuk       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   map.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mborsuk <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/05 10:00:37 by mborsuk           #+#    #+#             */
+/*   Updated: 2025/03/08 23:39:54 by mborsuk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ typedef struct s_cleanup_data
 	t_map			*map;
 }					t_cleanup_data;
 
-int					map_val(char **ar, char *filename);
+int					map_val(char **ar);
 
 int					get_ar_len(char **ar);
 

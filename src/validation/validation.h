@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mborsuk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/01 10:42:21 by mborsuk       #+  #+#    #+#             */
-/*   Updated: 2025/03/01 12:09:43 by mborsuk          ###   ########.fr       */
+/*   Created: 2025/03/01 10:42:21 by mborsuk           #+#    #+#             */
+/*   Updated: 2025/03/08 22:38:38 by mborsuk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	modify_ar(char **ar, int start_y, int start_x);
 
 t_c		*get_collectible_coordinates(char **array);
 
-int		map_val(char **ar, char *filename);
+int		map_val(char **ar);
 
 int		check_ways(char **ar);
 
@@ -56,4 +56,6 @@ int		check_all_positions(char **array, t_c *player_position,
 			t_c *exit_position, t_c *collectible_positions);
 
 void	init_coords(t_c *coords);
+
+int	check_file_extension(char *filename);
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   utils_2.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mborsuk <marvin@42.fr>                       +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/05 10:03:52 by mborsuk       #+#    #+#                 */
-/*   Updated: 2025/03/05 10:03:58 by mborsuk       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mborsuk <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/05 10:03:52 by mborsuk           #+#    #+#             */
+/*   Updated: 2025/03/09 10:46:50 by mborsuk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	get_len(char *str)
 	return (i);
 }
 
-void	perror_exit(const char *message)
+void	perror_exit(char *message)
 {
-	perror(message);
+	write(1, message, get_len(message));
 	exit (EXIT_FAILURE);
 }

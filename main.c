@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mborsuk <marvin@42.fr>                       +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/05 10:04:25 by mborsuk       #+#    #+#                 */
-/*   Updated: 2025/03/05 11:26:39 by mborsuk       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mborsuk <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/05 10:04:25 by mborsuk           #+#    #+#             */
+/*   Updated: 2025/03/08 23:14:52 by mborsuk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ int	main(int argc, char *argv[])
 		expose(expose_data);
 	}
 	else
-		perror_exit("wrong number of arguments.");
+		perror_exit("Error\nWrong number of arguments.");
 	return (0);
 }

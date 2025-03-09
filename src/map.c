@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   map.c                                              :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mborsuk <marvin@42.fr>                       +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/05 10:00:23 by mborsuk       #+#    #+#                 */
-/*   Updated: 2025/03/05 10:07:46 by mborsuk       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mborsuk <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/05 10:00:23 by mborsuk           #+#    #+#             */
+/*   Updated: 2025/03/09 11:04:20 by mborsuk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,13 @@ t_map	*parse_map(char *file_name)
 	int		size;
 	t_map	*map;
 
+	if (!check_file_extension(file_name))
+		exit (1);
 	ar = read_file(file_name);
-	if (!map_val(ar, file_name))
+	if (!map_val(ar))
 	{
-		free_substrings(ar);
+		if (ar != NULL)
+			free_substrings(ar);
 		exit(1);
 	}
 	map = (t_map *) malloc(sizeof(t_map));
